@@ -2,10 +2,10 @@ export class Board {
   board: Array<string>
 
   constructor() {
-    this.board  = []
+    this.board  = new Array(9).fill(null)
   }
 
   resetBoard() {
-    this.board = []
+    this.board = new Array(9).fill(null)
   }
 }
