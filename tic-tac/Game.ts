@@ -78,13 +78,15 @@ Game  Board
 `
     let content = "\x1B[34m"
     content += title + "\n"
+    let i = 0
 
-    Array.from({ length: 9 }, (_, i) => i).forEach((_, i) => {
+    while (i < 9) {
       content += i == 0 ? "-------------\n" : ""
       content += `| ${tag(board[i])} \x1B[34m`
       content += (i + 1) % 3 == 0 ? "|\n-------------\n" : ""
       content += i == 8 ? "\x1B[0m" : ""
-    })
+      i++
+    }
 
     console.log(content)
   }
