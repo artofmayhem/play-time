@@ -9,6 +9,6 @@ export const colour = (tag?: string) => {
       return `\x1B[93m${tag}\x1B[0m`
 
     default:
-      return " "
+      return null
   }
 }
