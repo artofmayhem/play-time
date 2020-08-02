@@ -1,12 +1,11 @@
 export class Board {
   board: Array<string>
-  private readonly size = 9
 
   constructor() {
-    this.board  = new Array(this.size)
+    this.board  = []
   }
 
   resetBoard() {
-    this.board = new Array(this.size)
+    this.board = []
   }
 }
