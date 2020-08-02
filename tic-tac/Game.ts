@@ -1,6 +1,6 @@
 import { Board } from "./Board"
 import { Player } from "./Player"
-import { tag } from "./utils"
+import { colour } from "./utils"
 import { WINNING_INDICES } from "./constants"
 
 export class Game {
@@ -82,7 +82,7 @@ Game  Board
 
     while (i < 9) {
       content += i == 0 ? "-------------\n" : ""
-      content += `| ${tag(board[i])} \x1B[34m`
+      content += `| ${colour(board[i])} \x1B[34m`
       content += (i + 1) % 3 == 0 ? "|\n-------------\n" : ""
       content += i == 8 ? "\x1B[0m" : ""
       i++
@@ -98,8 +98,8 @@ Game  Board
       `______________
 Players' Info
 ==============
-${p1?.name} - ${tag(this.players[p1?.name])}
-${p2?.name} - ${tag(this.players[p2?.name])}`
+${p1?.name} - ${colour(this.players[p1?.name])}
+${p2?.name} - ${colour(this.players[p2?.name])}`
     )
   }
 

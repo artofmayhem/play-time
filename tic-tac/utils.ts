@@ -1,7 +1,7 @@
 const cross = "✘"
 const circle = "◯"
 
-export const tag = (tag?: string) => {
+export const colour = (tag?: string) => {
   switch (tag) {
     case cross:
       return `\x1B[95m${tag}\x1B[0m`
