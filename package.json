@@ -1,0 +1,11 @@
+{
+  "name": "ptime",
+  "version": "1.0.0",
+  "description": "Series of casual games to pass time.",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
