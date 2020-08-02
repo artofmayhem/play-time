@@ -7,10 +7,11 @@ export class Game {
   private p1!: Player
   private p2!: Player
   private count: number
-  private hasWinner = false
+  public hasWinner = false
   private readonly gameBoard: Board
   private players: Record<string, string> = {}
   private tags: Readonly<Array<string>> = ["✘", "◯"]
+  isDraw: boolean = false
 
   constructor() {
     this.count = 0
@@ -26,6 +27,15 @@ export class Game {
     const index = Math.round(Math.random())
     this.players[this.p1.name] = this.tags[index]
     this.players[this.p2.name] = this.tags[1 - index]
+  }
+
+  checkDraw() {
+    const { board } = this.gameBoard
+    this.isDraw = !this.hasWinner && board.every((_, index: number) => board[index])
+
+    if (this.isDraw) {
+      console.log(`\x1b[92mIt is a TIE.\x1b[0m`)
+    }
   }
 
   checkWinner() {
@@ -60,13 +70,14 @@ export class Game {
       console.error(
         `\x1B[31m${this.player} made an invalid move. Move was already played, please try again.\x1B[0m`
       )
-      return
+    } else {
+      this.gameBoard.board[index] = this.tag
+      this.checkWinner()
+      this.checkDraw()
+      this.showBoard()
+      this.count++
     }
 
-    this.gameBoard.board[index] = this.tag
-    this.checkWinner()
-    this.showBoard()
-    this.count++
   }
 
   showBoard() {
@@ -82,7 +93,7 @@ Game  Board
 
     while (i < 9) {
       content += i == 0 ? "-------------\n" : ""
-      content += `| ${colour(board[i])} \x1B[34m`
+      content += `| ${colour(board[i]) ?? i + 1} \x1B[34m`
       content += (i + 1) % 3 == 0 ? "|\n-------------\n" : ""
       i++
     }
