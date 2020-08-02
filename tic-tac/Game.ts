@@ -94,13 +94,12 @@ Game  Board
   showInfo() {
     const { p1, p2 } = this
 
-    console.info(
-      `______________
+    console.info(`
+______________
 Players' Info
 ==============
 ${p1?.name} - ${colour(this.players[p1?.name])}
-${p2?.name} - ${colour(this.players[p2?.name])}`
-    )
+${p2?.name} - ${colour(this.players[p2?.name])}`)
   }
 
   start() {
