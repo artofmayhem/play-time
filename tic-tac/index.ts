@@ -1,13 +1,16 @@
 import * as readline from "readline"
 import { Game } from "./Game"
 
+let count = 0
 const game = new Game()
+let players: Record<string, string> = {
+  p1: "",
+  p2: "",
+}
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
-
-game.start()
 
 function play() {
   rl.question(
@@ -17,7 +20,9 @@ function play() {
       const isNaN = Number.isNaN(Number(move))
 
       if (isNaN || move < 1 || move > 9) {
-        console.log("\x1B[31mInvalid number entered, please try again.\x1B[30m")
+        console.error(
+          "\x1B[31mInvalid number entered, please try again.\x1B[0m"
+        )
         play()
         return
       }
@@ -33,4 +38,25 @@ function play() {
   )
 }
 
-play()
+function addPlayers() {
+  rl.question(
+    `Please enter a name for Player ${count > 0 ? "2" : "1"}: `,
+    (name) => {
+      if (!name) {
+        console.error("\x1B[31mName is required, please try again.\x1B[0m")
+        addPlayers()
+      } else {
+        players[`p${++count}`] = name
+        if (count == 2) {
+          rl.close()
+          game.start(players.p1, players.p2)
+          play()
+        } else {
+          addPlayers()
+        }
+      }
+    }
+  )
+}
+
+addPlayers()

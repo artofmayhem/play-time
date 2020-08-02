@@ -113,8 +113,8 @@ ${p1?.name} - ${colour(this.players[p1?.name])}
 ${p2?.name} - ${colour(this.players[p2?.name])}`)
   }
 
-  start() {
-    this.addPlayers()
+  start(p1?: string, p2?: string) {
+    this.addPlayers(p1, p2)
     this.assignTags()
     this.showInfo()
     this.showBoard()
