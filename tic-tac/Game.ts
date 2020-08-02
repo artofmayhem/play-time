@@ -76,18 +76,18 @@ _____________
 Game  Board
 =============
 `
+    let i = 0
     let content = "\x1B[34m"
     content += title + "\n"
-    let i = 0
 
     while (i < 9) {
       content += i == 0 ? "-------------\n" : ""
       content += `| ${colour(board[i])} \x1B[34m`
       content += (i + 1) % 3 == 0 ? "|\n-------------\n" : ""
-      content += i == 8 ? "\x1B[0m" : ""
       i++
     }
 
+    content += "\x1B[0m"
     console.log(content)
   }
 
