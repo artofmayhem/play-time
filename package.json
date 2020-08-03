@@ -4,6 +4,9 @@
   "description": "Series of casual games to pass time.",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "tic-tac": "ts-node tic-tac"
+  },
   "devDependencies": {
     "@types/node": "^14.0.27",
     "ts-node": "^8.10.2",
