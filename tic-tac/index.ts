@@ -12,6 +12,19 @@ const rl = readline.createInterface({
   output: process.stdout,
 })
 
+function replay() {
+  rl.question("Would you like to play again? y/N ", (answer) => {
+    if (answer.toUpperCase() == "Y") {
+      game.resetGame()
+      game.showScores()
+      game.showBoard()
+      play()
+    } else {
+      rl.close()
+    }
+  })
+}
+
 function play() {
   rl.question(
     `${game.player}, please enter a number between 1 - 9, to play: `,
@@ -28,7 +41,7 @@ function play() {
         game.play(move)
   
         if (game.isDraw || game.hasWinner) {
-          rl.close()
+          replay()
         } else {
           play()
         }
