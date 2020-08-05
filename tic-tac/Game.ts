@@ -91,7 +91,7 @@ Game  Board
     let content = "\x1B[34m"
     content += title + "\n"
 
-    while (i < 9) {
+    while (i < board.length) {
       content += i == 0 ? "-------------\n" : ""
       content += `| ${colour(board[i++]) ?? i} \x1B[34m`
       content += i % 3 == 0 ? "|\n-------------\n" : ""
