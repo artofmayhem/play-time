@@ -1,6 +1,6 @@
 import { Board } from "./Board"
-import { Player } from "./Player"
 import { colour } from "./utils"
+import { Player } from "./Player"
 import { WINNING_INDICES } from "./constants"
 
 export class Game {
@@ -8,10 +8,10 @@ export class Game {
   private p2!: Player
   private count: number
   public hasWinner = false
+  public isDraw: boolean = false
   private readonly gameBoard: Board
   private players: Record<string, string> = {}
   private tags: Readonly<Array<string>> = ["✘", "◯"]
-  isDraw: boolean = false
 
   constructor() {
     this.count = 0
@@ -31,7 +31,8 @@ export class Game {
 
   checkDraw() {
     const { board } = this.gameBoard
-    this.isDraw = !this.hasWinner && board.every((_, index: number) => board[index])
+    this.isDraw =
+      !this.hasWinner && board.every((_, index: number) => board[index])
 
     if (this.isDraw) {
       console.log(`\x1b[92mIt is a TIE.\x1b[0m`)
@@ -77,7 +78,6 @@ export class Game {
       this.showBoard()
       this.count++
     }
-
   }
 
   showBoard() {
@@ -93,9 +93,8 @@ Game  Board
 
     while (i < 9) {
       content += i == 0 ? "-------------\n" : ""
-      content += `| ${colour(board[i]) ?? i + 1} \x1B[34m`
-      content += (i + 1) % 3 == 0 ? "|\n-------------\n" : ""
-      i++
+      content += `| ${colour(board[i++]) ?? i} \x1B[34m`
+      content += i % 3 == 0 ? "|\n-------------\n" : ""
     }
 
     content += "\x1B[0m"
