@@ -24,15 +24,14 @@ function play() {
           "\x1B[31mInvalid number entered, please try again.\x1B[0m"
         )
         play()
-        return
-      }
-
-      game.play(move)
-
-      if (game.isDraw || game.hasWinner) {
-        rl.close()
       } else {
-        play()
+        game.play(move)
+  
+        if (game.isDraw || game.hasWinner) {
+          rl.close()
+        } else {
+          play()
+        }
       }
     }
   )
@@ -48,7 +47,6 @@ function addPlayers() {
       } else {
         players[`p${++count}`] = name
         if (count == 2) {
-          rl.close()
           game.start(players.p1, players.p2)
           play()
         } else {
