@@ -1,3 +1,4 @@
+export const TAGS = ["✘", "◯"]
 export const WINNING_INDICES = [
   // Rows
   [0, 1, 2],
