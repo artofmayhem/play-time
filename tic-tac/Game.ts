@@ -1,32 +1,35 @@
 import { Board } from "./Board"
 import { colour } from "./utils"
 import { Player } from "./Player"
-import { WINNING_INDICES } from "./constants"
+import { Scoreboard } from "./Scoreboard"
+import { TAGS, WINNING_INDICES } from "./constants"
 
 export class Game {
   private p1!: Player
   private p2!: Player
   private count: number
   public hasWinner = false
+  private scoreboard: Scoreboard
   public isDraw: boolean = false
   private readonly gameBoard: Board
-  private players: Record<string, string> = {}
-  private tags: Readonly<Array<string>> = ["✘", "◯"]
+  private tags: Record<string, string> = {}
 
   constructor() {
     this.count = 0
     this.gameBoard = new Board()
+    this.scoreboard = new Scoreboard()
   }
 
   addPlayers(p1?: string, p2?: string) {
     this.p1 = new Player(p1)
     this.p2 = new Player(p2)
+    this.scoreboard.initScores(this.p1.name, this.p2.name)
   }
 
   assignTags() {
     const index = Math.round(Math.random())
-    this.players[this.p1.name] = this.tags[index]
-    this.players[this.p2.name] = this.tags[1 - index]
+    this.tags[this.p1.name] = TAGS[index]
+    this.tags[this.p2.name] = TAGS[1 - index]
   }
 
   checkDraw() {
@@ -45,7 +48,9 @@ export class Game {
     )
 
     if (this.hasWinner) {
+      this.scoreboard.updateScores(this.player)
       console.log(`\x1b[92m${this.player} WON this round.\x1b[0m`)
+      this.showScores()
     }
   }
 
@@ -54,7 +59,7 @@ export class Game {
   }
 
   get tag() {
-    return this.players[this.player]
+    return this.tags[this.player]
   }
 
   isValidMove(index: number) {
@@ -78,6 +83,13 @@ export class Game {
       this.showBoard()
       this.count++
     }
+  }
+
+  resetGame() {
+    this.count = 0
+    this.isDraw = false
+    this.hasWinner = false
+    this.gameBoard.resetBoard()
   }
 
   showBoard() {
@@ -108,14 +120,31 @@ Game  Board
 ______________
 Players' Info
 ==============
-${p1?.name} - ${colour(this.players[p1?.name])}
-${p2?.name} - ${colour(this.players[p2?.name])}`)
+${p1?.name} - ${colour(this.tags[p1?.name])}
+${p2?.name} - ${colour(this.tags[p2?.name])}`)
+  }
+
+  showScores() {
+    const { scoreboard } = this
+    const p1 = this.p1.name
+    const p2 = this.p2.name
+    const p1Score = scoreboard.scores[p1]
+    const p2Score = scoreboard.scores[p2]
+    console.info(`
+SCOREBOARD
+=================
+${p1}: ${p1Score}
+-----------------
+${p2}: ${p2Score}
+=================
+    `)
   }
 
   start(p1?: string, p2?: string) {
     this.addPlayers(p1, p2)
     this.assignTags()
     this.showInfo()
+    this.showScores()
     this.showBoard()
   }
 }
