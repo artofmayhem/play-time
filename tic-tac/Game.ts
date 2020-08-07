@@ -9,9 +9,9 @@ export class Game {
   private p2!: Player
   private count: number
   public hasWinner = false
-  private scoreboard: Scoreboard
   public isDraw: boolean = false
   private readonly gameBoard: Board
+  private readonly scoreboard: Scoreboard
   private tags: Record<string, string> = {}
 
   constructor() {
@@ -23,7 +23,6 @@ export class Game {
   addPlayers(p1?: string, p2?: string) {
     this.p1 = new Player(p1)
     this.p2 = new Player(p2)
-    this.scoreboard.initScores(this.p1.name, this.p2.name)
   }
 
   assignTags() {
@@ -60,6 +59,10 @@ export class Game {
 
   get tag() {
     return this.tags[this.player]
+  }
+
+  initScores() {
+    this.scoreboard.initScores(this.p1.name, this.p2.name)
   }
 
   isValidMove(index: number) {
@@ -142,6 +145,7 @@ ${p2}: ${p2Score}
 
   start(p1?: string, p2?: string) {
     this.addPlayers(p1, p2)
+    this.initScores()
     this.assignTags()
     this.showInfo()
     this.showScores()
